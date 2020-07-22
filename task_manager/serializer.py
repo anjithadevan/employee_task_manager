@@ -2,8 +2,13 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
+from task_manager.models import Task
+
 
 class UserSerializer(serializers.ModelSerializer):
+    """
+    Serializer for user creation
+    """
     username = serializers.CharField(
         validators=[UniqueValidator(queryset=User.objects.all())]
     )
@@ -22,9 +27,23 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class UserLoginSerializer(serializers.ModelSerializer):
+    """"
+    Serializer for user login
+    """
     username = serializers.CharField(label='Username', write_only=True, required=True)
     password = serializers.CharField(label='Password', write_only=True, min_length=8, required=True)
 
     class Meta:
         model = User
         fields = ('username', 'password')
+
+
+class TaskSerializer(serializers.ModelSerializer):
+    """
+    serializer for task managing
+    """
+
+    class Meta:
+        model = Task
+        fields = '__all__'
+        read_only_fields = ['created_at', 'modified_at']
