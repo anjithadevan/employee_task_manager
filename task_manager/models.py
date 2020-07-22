@@ -16,8 +16,8 @@ class Task(models.Model):
     employee = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=200, null=True, blank=True)
-    created_at = models.DateTimeField()
-    modified_at = models.DateTimeField(default=datetime.now())
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=3, choices=STATUS_OF_TASKS, default=NEW)
 
 
@@ -25,4 +25,4 @@ class Comment(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     heading = models.CharField(max_length=100)
     description = models.CharField(max_length=200, null=True, blank=True)
-    created_at = models.DateTimeField(default=datetime.now())
+    created_at = models.DateTimeField(auto_now_add=True)
