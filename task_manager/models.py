@@ -24,6 +24,7 @@ class Task(models.Model):
         return '%s, %s' % (self.employee.username, self.name)
         return self.employee.username
 
+
 class Comment(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     heading = models.CharField(max_length=100)
