@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from task_manager.models import Task
+from task_manager.models import Task, Comment
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -38,12 +38,23 @@ class UserLoginSerializer(serializers.ModelSerializer):
         fields = ('username', 'password')
 
 
-class TaskSerializer(serializers.ModelSerializer):
+class CommentSerializer(serializers.ModelSerializer):
     """
     serializer for task managing
     """
 
     class Meta:
+        model = Comment
+        fields = '__all__'
+
+
+class TaskSerializer(serializers.ModelSerializer):
+    """
+    serializer for task managing
+    """
+    task_comment = CommentSerializer(read_only=True, many=True)
+
+    class Meta:
         model = Task
         fields = '__all__'
-        read_only_fields = ['created_at', 'modified_at']
+        read_only_fields = ['created_at', 'modified_at', 'task_comment']

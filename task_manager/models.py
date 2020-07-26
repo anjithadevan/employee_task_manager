@@ -26,7 +26,7 @@ class Task(models.Model):
 
 
 class Comment(models.Model):
-    task = models.ForeignKey(Task, on_delete=models.CASCADE)
+    task = models.ForeignKey(Task, related_name='task_comment', on_delete=models.CASCADE)
     heading = models.CharField(max_length=100)
     description = models.CharField(max_length=200, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
